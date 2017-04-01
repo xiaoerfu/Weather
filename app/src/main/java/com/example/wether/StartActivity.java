@@ -33,7 +33,7 @@ public class StartActivity extends AppCompatActivity {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                Intent intent = new Intent(StartActivity.this,MainActivity.class);
+                Intent intent = new Intent(StartActivity.this,WeatherActivity.class);
                 startActivity(intent);
                 finish();
             }

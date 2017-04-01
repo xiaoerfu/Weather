@@ -57,6 +57,6 @@
             android:id="@+id/choose_area_fragment"
             android:name="com.example.wether.ChooseAreaFragment"
             android:layout_gravity="start"
-            />
+            tools:layout="@layout/choose_area" />
     </android.support.v4.widget.DrawerLayout>
 </FrameLayout>
