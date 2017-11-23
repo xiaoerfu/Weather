@@ -7,23 +7,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/title_city"
-        android:textSize="30sp"
-        android:textColor="#fcd0d1d1"
-        android:layout_centerInParent="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/title_update_time"
-        android:layout_alignParentBottom="false"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="10dp"
-        android:layout_centerVertical="true"
         android:textSize="20sp"
-        android:textColor="#12ea16"/>
+        android:textColor="#12ea16"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/b_map"
+        android:layout_toEndOf="@+id/b_map"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp" />
 
     <Button
         android:layout_width="30dp"
@@ -33,4 +25,45 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="桂林"
+        android:id="@+id/b_guilin"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/nav_button"
+        android:layout_toEndOf="@+id/nav_button" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="梧州"
+        android:id="@+id/b_wuzhou"
+        android:layout_alignTop="@+id/b_guilin"
+        android:layout_toRightOf="@+id/b_guilin"
+        android:layout_toEndOf="@+id/b_guilin" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="贵港"
+        android:id="@+id/b_guigang"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/b_wuzhou"
+        android:layout_toEndOf="@+id/b_wuzhou" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="地图"
+        android:id="@+id/b_map"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/b_guigang"
+        android:layout_toEndOf="@+id/b_guigang" />
+
 </RelativeLayout>

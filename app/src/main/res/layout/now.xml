@@ -8,10 +8,19 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="梧州"
+        android:id="@+id/title_city"
+        android:textSize="30sp"
+        android:textColor="#161616"
+        android:paddingLeft="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/degree_text"
         android:layout_gravity="end"
         android:textSize="60sp"
-        android:textColor="#ffffff"/>
+        android:textColor="#97ffa8" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,5 +29,5 @@
         android:id="@+id/weather_info_text"
         android:layout_gravity="end"
         android:textSize="20sp"
-        android:textColor="#ffffff"/>
+        android:textColor="#97ffa8"/>
 </LinearLayout>

@@ -36,7 +36,7 @@ public class AutoUpdateService extends Service {
         updateWeather();                //定时更新天气
         updateBingPic();                 //定时更新必应图片
         AlarmManager manager = (AlarmManager)getSystemService(ALARM_SERVICE);       //时间管理
-        int anHour = 4 * 60 * 60 * 1000;            //4小时好秒数
+        int anHour = 60 * 60 * 1000;            //1小时好秒数
         long triggerAtTime = SystemClock.elapsedRealtime() + anHour;
         Intent i = new Intent(this,AutoUpdateService.class);
         PendingIntent pi = PendingIntent.getService(this,0,i,0);
@@ -54,7 +54,7 @@ public class AutoUpdateService extends Service {
             Weather weather = Utility.handleWeatherResponse(weatherString);
             String weatherId = weather.basic.weatherId;
 
-            String weatherUrl = "http://guolin.tech/api/weather?cityid=" + weatherId
+            String weatherUrl = "https://api.heweather.com/s6/weather?cityid=" + weatherId
                     +"&key=242d159a4b1a451a8455558ba7c8810d";
             HttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
                 @Override
@@ -76,7 +76,7 @@ public class AutoUpdateService extends Service {
         }
     }
 
-    /*更新每日必应图片*/
+    /*更新每日必应图片,回调函数*/
     private void updateBingPic(){
         String requestBingPic = "http://guolin.tech/api/bing_pin";
         HttpUtil.sendOkHttpRequest(requestBingPic, new Callback() {

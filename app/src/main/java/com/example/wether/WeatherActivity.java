@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,9 +34,17 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherActivity extends AppCompatActivity  implements View.OnClickListener{
 
     private ScrollView weatherLayout;
+
+    private Button guilin;
+
+    private Button wuzhou;
+
+    private Button guigang;
+
+    private Button map;
 
     private TextView titleCity;
 
@@ -74,15 +83,30 @@ public class WeatherActivity extends AppCompatActivity {
             View decorView = getWindow().getDecorView();
             decorView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_FULLSCREEN                      //全屏模式
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE              //根据布局文件
+//                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE              //根据布局文件
                                      | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);       //显示之后会消失，可以拉下来显示
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
+
+                /*隐藏标题栏*/
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null){
+//            actionBar.hide();
+//        }
+
         setContentView(R.layout.activity_weather);
 
         // 初始化各控件
         weatherLayout = (ScrollView) findViewById(R.id.weather_layout);
         titleCity = (TextView) findViewById(R.id.title_city);
+
+        //添加城市按钮
+        guilin = (Button)findViewById(R.id.b_guilin);
+        wuzhou = (Button)findViewById(R.id.b_wuzhou);
+        guigang = (Button)findViewById(R.id.b_guigang);
+
+        map = (Button)findViewById(R.id.b_map);
+
         titleUpdateTime = (TextView) findViewById(R.id.title_update_time);
         degreeText = (TextView) findViewById(R.id.degree_text);
         weatherInfoText = (TextView) findViewById(R.id.weather_info_text);
@@ -100,6 +124,16 @@ public class WeatherActivity extends AppCompatActivity {
 
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         navButton = (Button)findViewById(R.id.nav_button);
+
+        //添加按钮监听事件
+        guilin.setOnClickListener(this);
+        wuzhou.setOnClickListener(this);
+        guigang.setOnClickListener(this);
+        map.setOnClickListener(this);
+
+        //首先加载桂林天气
+        requestWeather("CN101300501");
+
         navButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,8 +174,33 @@ public class WeatherActivity extends AppCompatActivity {
             }
         }
 
-        /**
-         * 根据天气id请求城市天气信息。
+    /**
+     * 按钮监听事件
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.b_guilin:
+                requestWeather("CN101300501");
+                break;
+            case R.id.b_wuzhou:
+                requestWeather("CN101300601");
+                break;
+            case R.id.b_guigang:
+                requestWeather("CN101300801");
+                break;
+            case R.id.b_map:
+                Intent mapActivity = new Intent(WeatherActivity.this, MapActivity.class);
+                finish();
+                startActivity(mapActivity);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+         * 根据天气id请求城市天气信息。CN101300601
          */
 
     public void requestWeather(final String weatherId) {
@@ -248,6 +307,6 @@ public class WeatherActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, AutoUpdateService.class);
         startService(intent);                                                                   //开启服务
-        Toast.makeText(this,"服务开启，每4小时更新天气数据",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"服务开启，每1小时更新天气数据",Toast.LENGTH_SHORT).show();
     }
 }
