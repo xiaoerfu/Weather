@@ -24,11 +24,13 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -176,6 +178,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
     boolean isFirstLoc = true; // 是否首次定位
     private MyLocationData locData;
     private float direction;
+    BDLocation bdlocation = new BDLocation();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -184,6 +187,23 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
         //注意该方法要再setContentView方法之前实现
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_map);
+
+        // 地图初始化
+        mMapView = (MapView) findViewById(R.id.bmapView);
+        mBaiduMap = mMapView.getMap();
+        // 开启定位图层
+        mBaiduMap.setMyLocationEnabled(true);
+        // 定位初始化
+        mLocClient = new LocationClient(getApplicationContext());
+        mLocClient.registerLocationListener(myListener);
+        LocationClientOption option = new LocationClientOption();
+        option.setOpenGps(true); // 打开gps
+        option.setCoorType("bd09ll"); // 设置坐标类型
+        option.setScanSpan(1000);
+        option.setIsNeedAddress(true);
+        mLocClient.setLocOption(option);
+        mLocClient.start();
+
 
         //设置定位模式
         requestLocButton = (Button) findViewById(R.id.button1);
@@ -203,6 +223,13 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                         builder.overlook(0);
                         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
                         break;
+                    case FOLLOWING:
+                        requestLocButton.setText("罗盘");
+                        mCurrentMode = LocationMode.COMPASS;
+                        mBaiduMap
+                                .setMyLocationConfiguration(new MyLocationConfiguration(
+                                        mCurrentMode, true, mCurrentMarker));
+                        break;
                     case COMPASS:
                         requestLocButton.setText("普通");
                         mCurrentMode = LocationMode.NORMAL;
@@ -212,13 +239,6 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                         MapStatus.Builder builder1 = new MapStatus.Builder();
                         builder1.overlook(0);
                         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder1.build()));
-                        break;
-                    case FOLLOWING:
-                        requestLocButton.setText("罗盘");
-                        mCurrentMode = LocationMode.COMPASS;
-                        mBaiduMap
-                                .setMyLocationConfiguration(new MyLocationConfiguration(
-                                        mCurrentMode, true, mCurrentMarker));
                         break;
                     default:
                         break;
@@ -270,20 +290,6 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
         };
         group.setOnCheckedChangeListener(radioButtonListener);
 
-        // 地图初始化
-        mMapView = (MapView) findViewById(R.id.bmapView);
-        mBaiduMap = mMapView.getMap();
-        // 开启定位图层
-        mBaiduMap.setMyLocationEnabled(true);
-        // 定位初始化
-        mLocClient = new LocationClient(this);
-        mLocClient.registerLocationListener(myListener);
-        LocationClientOption option = new LocationClientOption();
-        option.setOpenGps(true); // 打开gps
-        option.setCoorType("bd09ll"); // 设置坐标类型
-        option.setScanSpan(1000);
-        mLocClient.setLocOption(option);
-        mLocClient.start();
     }
 
     @Override
@@ -334,6 +340,8 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                 MapStatus.Builder builder = new MapStatus.Builder();
                 builder.target(ll).zoom(18.0f);
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+                Toast.makeText(MapActivity.this, location.getAddrStr(), Toast.LENGTH_LONG).show();
+                Log.d( "onReceiveLocation:-- ",location.getAddrStr());
             }
         }
 

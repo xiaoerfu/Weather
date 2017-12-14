@@ -2,34 +2,35 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wether">
 
-    //获取设备网络状态，禁用后无法获取网络状态
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
-    //网络权限，当禁用后，无法进行检索等相关业务
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="10" />
 
-    //读取设备硬件信息，统计数据
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-    <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    //读取系统信息，包含系统版本等信息，用作统计
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-
-    //获取设备的网络状态，鉴权所需网络代理
+    <!-- 获取网络状态  -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 访问网络 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 获取WiFi状态 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-    //允许sd卡写权限，需写入地图数据，禁用后无法显示地图
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
-    //获取统计数据
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 允许程序写入外部存储,如SD卡上写文件 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- 读取电话状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 获取精确位置 GPS芯片接收卫星的定位信息,定位精度达10米以内 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 通过WiFi或移动基站的方式获取用户错略的经纬度信息 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 获取模拟定位信息 -->
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
 
-    //鉴权所需该权限获取进程列表
+    <!--鉴权所需该权限获取进程列表-->
     <uses-permission android:name="android.permission.GET_TASKS" />
 
-    //使用步行AR导航，配置Camera权限
+    <!--使用步行AR导航，配置Camera权限-->
     <uses-permission android:name="android.permission.CAMERA" />
 
 
@@ -43,7 +44,7 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="sLkDhK3y0B4ZeH2WUSbP6sRt7qD4PuV4" />
+            android:value="DRxOPg3o2VTUzxQfcfukcWGc9V7UWWxy" />
 
         <activity android:name=".MapActivity">
         </activity>
